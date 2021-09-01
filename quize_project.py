@@ -15,7 +15,7 @@ def main():
     try:
         welcome_banner()
         while True:
-            print(' Enter "q" or "quit" to quit the game! ')
+            print('Enter "q" or "quit" to quit the game! ')
             print(
                 'Choose from one of the following topics to be quizzed on: *Art\t*Space\t*Sport.')
             topic = input('Enter Here: ').lower()
@@ -26,7 +26,7 @@ def main():
             elif topic == 'sport':
                 sport_questions()
             elif topic == 'quit' or 'q':
-                print('Session ended')
+                print('Your quiz session has ended......')
                 sys.exit()
             else:
                 print('Not a valid topic, please try again.\n')
@@ -76,23 +76,27 @@ def sport_questions():
 
 
 def quiz_questions(topic):
+    """this function loops through set of questions based on given topic"""
     try:
 
+        # returns size of quiz question
         current_list_size = len(questions[topic])
         score = 0
+        # looping through the passed topic list
         for i in copy.deepcopy(questions[topic]):
             print(i)
             user = input('Enter here:\t').lower()
+            # return correct if the given key question mataches the users answer
             if questions[topic][i].lower() == user:
                 print('correct')
                 score += 1
                 # del questions[topic][i]
             else:
                 print(
-                    f'Sorry that was incorrect. The correct answer we were looking for was {questions[topic][i]}\n')
+                    f'Sorry that was incorrect. The correct answer we were looking for was {questions[topic][i]}\n')  # display the correct answer
                 # del questions[topic][i]
 
-        if score == current_list_size:
+        if score == current_list_size:  # check to see if they answered all the questions correctly
             print('Nice! you got all the answers correct!')
         else:
             print(f'You got {score}/{str(current_list_size)} correct!')

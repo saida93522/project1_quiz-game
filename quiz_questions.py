@@ -11,7 +11,7 @@ questions = {
         'Which planet spins in the opposite direction to all the others in the solar system?\t': 'Venus',
         'How many moons does Mars have?\t': '2'
     },
-    'sports': {
+    'sport': {
         'Which gymnast is the "triple-twisting double-tucked salto backwards" skill named after? \t': 'Simone Biles',
         'Which country has won the soccer world cup the most times?\t': 'Brasil',
         'What does MLB stand for?\t': 'Major League Baseball',
