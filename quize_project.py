@@ -8,201 +8,96 @@ the number of questions successfully answered will be displayed."""
 import copy
 import sys
 # import topic Questions
-from quiz_questions import art_questions, space_questions, sports_questions
+from quiz_questions import questions
 
 
-def choose_topic(topic):
+def main():
     try:
-        while topic != 'q' or 'quit':
+        welcome_banner()
+        while True:
+            print(' Enter "q" or "quit" to quit the game! ')
+            print(
+                'Choose from one of the following topics to be quizzed on: *Art\t*Space\t*Sport.')
+            topic = input('Enter Here: ').lower()
             if topic == 'art':
-                artQuestions()
+                art_questions()
             elif topic == 'space':
-                spaceQuestions()
-            elif topic == 'sport' or topic == 'sports':
-                sportQuestions()
+                space_questions()
+            elif topic == 'sport':
+                sport_questions()
+            elif topic == 'quit' or 'q':
+                print('Session ended')
+                sys.exit()
             else:
-                print(
-                    'Error,now restarting game.Try again make sure to check your spelling\n')
-                return main()
-            break
+                print('Not a valid topic, please try again.\n')
 
-    except Exception as err:
-        print(f'something went wrong in choosing a topic{err}')
+    except KeyError as key_err:
+        print(f'key error {key_err}')
+
+
+def welcome_banner():
+    print('\t*' * 10)
+    print('\t\tWelcome!')
+    print('\tPut your knowledge to the test with this Ultimate Quiz Questions!')
+    print('\t*' * 10)
+    print()
 
 # *****TOPICS****
 
 
-def artQuestions():
+def art_questions():
     try:
         print(f'Chosen topic: Art\n')
-        section = 'art'
-        art_score = 0
-        quiz_list, first_score = quizeQuestions(art_questions, art_score)
-        # ask if they want more art question else call function send them
-        print('Would you like some more art questions? or to restart game?')
-        print(
-            "Type 'restart' to restart the game. Type 'more' for extra art questions? ")
-        new_topic = input('Enter Here: ').lower()
-        if new_topic == 'restart':
-            return main()
-
-        elif new_topic == 'more':  # try rendering these from quiz_question.py file
-            art_questions[0] = {"question": "Which kid's TV characters are named after Renaissance artists?\t",
-                                "answer": "Teenage Mutant Ninja Turtles"}
-            art_questions[1] = {"question": "The graphite in an artist's pencil is made of what chemical element?\t",
-                                "answer": "Carbon"
-                                }
-        second_quiz, second_score = quizeQuestions(art_questions,  art_score)
-
-        display_result(quiz_list, first_score,
-                       second_quiz, second_score, section)
+        quiz_questions('art')
 
     except Exception as err:
         # update later
         print(f'Something went wrong in artQuestions() {err}')
 
 
-# display space questions
-def spaceQuestions():
+def space_questions():
     try:
         print(f'Chosen topic: Space\n')
-        space_score = 0
-        section = 'space'
-
-        # first set of questions
-        space_quiz, first_score = quizeQuestions(space_questions, space_score)
-        # ask if they want more art question else call function send them
-        # TODO: Fix duplication here
-        print('Would you like more space questions? or to restart game?')
-        print(
-            "Type 'restart' to restart the game. Type 'more' for extra space questions? ")
-        new_topic = input('Enter Here: ').lower()
-        if new_topic == 'restart':
-            return main()
-
-        elif new_topic == 'more':
-            space_questions[0] = {"question": "What was the first human-made object to leave the solar system?\t",
-                                  "answer": "Voyager 1"
-                                  }
-
-            space_questions[1] = {"question": "When an asteroid enters the Earth's atmosphere and burns up, it is known as what?\t",
-                                  "answer": "Meteor"
-                                  }
-        # second set of questions
-        extra_questions, extra_score = quizeQuestions(
-            space_questions,  space_score)
-        display_result(space_quiz, first_score,
-                       extra_questions, extra_score, section)
+        quiz_questions('space')
 
     except Exception as err:
         # update later
-        print(f'Something went wrong in spaceQuestion() {err}')
+        print(f'Something went wrong in artQuestions() {err}')
 
 
-# displays sports questions
-def sportQuestions():
+def sport_questions():
     try:
-        section = 'sport'
-
         print(f'Chosen topic: Sport\n')
-        sportScore = 0
-        sportQuiz, sport_score = quizeQuestions(sports_questions, sportScore)
-
-        # TODO: Fix duplication here
-        # ask if they want more art question else call function send them
-        print('Would you like more sports questions? or to restart game?')
-        print(
-            "Type 'restart' to restart the game. Type 'more' for extra art questions? ")
-        new_topic = input('Enter Here: ').lower()
-        if new_topic == 'restart':
-            return main()
-
-        elif new_topic == 'more':
-            sports_questions[0] = {"question": "The Olympics are held every how many years?\t",
-                                   "answer": "4"}
-            sports_questions[1] = {"question": "Who has won more tennis grand slam titles, Venus Williams or Serena Williams?\t",
-                                   "answer": "Serena Williams"}
-        extra_quiz, second_score = quizeQuestions(sports_questions, sportScore)
-        display_result(sportQuiz, sport_score,
-                       extra_quiz, second_score, section)
+        quiz_questions('sport')
 
     except Exception as err:
         # update later
-        print(f'Something went wrong in sportQuestions() {err}')
+        print(f'Something went wrong in artQuestions() {err}')
 
 
-# psuedo:create a function that accepts any given quizlist. returns the size and the score
-def quizeQuestions(my_quiz_dict, correct_score):
+def quiz_questions(topic):
     try:
-        currentListSize = len(my_quiz_dict)
-        # loop through art question nested dictionary using deepcopy
-        for currentQuestion in copy.deepcopy((my_quiz_dict)):
-            # inner dictionary i.e 1:{question} ++
-            print(my_quiz_dict[currentQuestion]['question'])
-            answerGiven = input('Enter answer here: ').lower()
-            user_answer = check_answer(
-                my_quiz_dict, currentQuestion, answerGiven)
 
-            # verify if user's answer was correct
-            if user_answer:
-                print('Correct!\n')
-                correct_score += 1
-                # del the current question from list
-                del my_quiz_dict[currentQuestion]
+        current_list_size = len(questions[topic])
+        score = 0
+        for i in copy.deepcopy(questions[topic]):
+            print(i)
+            user = input('Enter here:\t').lower()
+            if questions[topic][i].lower() == user:
+                print('correct')
+                score += 1
+                # del questions[topic][i]
             else:
                 print(
-                    f'Sorry that was incorrect. The correct answer we were looking for was {my_quiz_dict[currentQuestion]["answer"]}\n')
-                del my_quiz_dict[currentQuestion]
-            # verification purposes delete later
-            # print(f'quize size is now {str(len(my_quiz_dict))}')
+                    f'Sorry that was incorrect. The correct answer we were looking for was {questions[topic][i]}\n')
+                # del questions[topic][i]
 
-        print(f'You got {correct_score}/{str(currentListSize)} correct!')
-        # overwrites dict and returns tuple
-        return currentListSize, correct_score
-    except TypeError as err:
-        # update later
-        print(f'Something went wrong in the quizQuestion() {err}')
-
-
-# function that checks the answer for any given  questions
-def check_answer(question_list, question, answer):
-    try:
-        # returns true if the answer matches
-        if question_list[question]['answer'].lower() == answer:
-            return True
+        if score == current_list_size:
+            print('Nice! you got all the answers correct!')
         else:
-            return False
-    except Exception as err:
-        # update later
-        print(f'Something went wrong in check_answer() {err}')
-
-
-# display score results
-def display_result(quizList1, first_score, extra_quiz, extra_score, section):
-    totalScore = first_score + extra_score
-    total_questions = quizList1 + extra_quiz
-    print('\n***RESULTS')
-    print(
-        f'You answered a total of {totalScore}/{total_questions} {section} questions correct')
-
-
-def main():
-    # topicList = ['art', 'space', 'sport']
-    try:
-        # Ask user for topic to be quized on
-        print('****Welcome!***\nPut your knowledge to the test with this Ultimate Quiz Questions!')
-        print("Note**Enter 'q' or 'quit' to quit the game!")
-
-        quit_game = ""
-        if quit_game == "q" or quit_game == "quit":
-            print('Your quiz session has ended.')
-            sys.exit()
-        else:
-            choose_topic(input(
-                'Choose one of the following topics to be quizzed on:\tArt\tSpace\tSport.\nEnter Here: ').lower())
-
-    except Exception as err:
-        print(f'Something went wrong in main.{err}')  # update later
+            print(f'You got {score}/{str(current_list_size)} correct!')
+    except KeyError:
+        print('Something went wrong in quiz_questions()')
 
 
 main()
