@@ -84,26 +84,27 @@ def quiz_questions(topic):
         # returns size of quiz question
         current_list_size = len(questions[topic])
         score = 0
-        # looping through the passed topic list
+        # loops through the passed topic questions list
         for i in copy.deepcopy(questions[topic]):
             print(i)
             user = input('Enter here:\t').lower()
             # return correct if the given key question mataches the users answer
             if questions[topic][i].lower() == user:
-                print('correct')
+                print('correct\n')
                 score += 1
                 # del questions[topic][i]
             else:
                 print(
-                    f'Sorry that was incorrect. The correct answer we were looking for was {questions[topic][i]}\n')  # display the correct answer
+                    f'Sorry that was incorrect. The correct answer  I was looking for was {questions[topic][i]}\n')  # display the correct answer
                 # del questions[topic][i]
 
         if score == current_list_size:  # check to see if they answered all the questions correctly
             print('Nice! you got all the answers correct!')
         else:
+            # otherwise return score.
             print(f'You got {score}/{str(current_list_size)} correct!')
     except KeyError:
-        print('Something went wrong in quiz_questions()')
+        print('Something went wrong in quiz_questions(), check logic')
 
 
 main()
