@@ -34,6 +34,8 @@ def main():
     except KeyError as key_err:
         print(f'key error {key_err}')
 
+# introduct to quiz game
+
 
 def welcome_banner():
     print('\t*' * 10)
@@ -48,21 +50,21 @@ def welcome_banner():
 def art_questions():
     try:
         print(f'Chosen topic: Art\n')
-        quiz_questions('art')
+        quiz_questions('art')  # call quiz question on art
 
     except Exception as err:
         # update later
-        print(f'Something went wrong in artQuestions() {err}')
+        print(f'Something went wrong in art_questions() {err}')
 
 
 def space_questions():
     try:
         print(f'Chosen topic: Space\n')
-        quiz_questions('space')
+        quiz_questions('space')  # call quiz question on space
 
     except Exception as err:
         # update later
-        print(f'Something went wrong in artQuestions() {err}')
+        print(f'Something went wrong in space_questions() {err}')
 
 
 def sport_questions():
@@ -72,7 +74,7 @@ def sport_questions():
 
     except Exception as err:
         # update later
-        print(f'Something went wrong in artQuestions() {err}')
+        print(f'Something went wrong in sport_questions() {err}')
 
 
 def quiz_questions(topic):
