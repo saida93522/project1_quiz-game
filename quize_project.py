@@ -7,7 +7,6 @@ After the user has completed all of the questions,
 the number of questions successfully answered will be displayed."""
 import copy
 import sys
-# import topic Questions
 from quiz_questions import questions
 
 
@@ -17,14 +16,14 @@ def main():
         while True:
             print('Enter "q" or "quit" to quit the game! ')
             print(
-                'Choose from one of the following topics to be quizzed on: *Art\t*Space\t*Sport.')
+                'Choose from one of the following topics to be quizzed on.')
+            for t in questions.keys():
+                print(f'-*- {t.capitalize()}')
+
             topic = input('Enter Here: ').lower()
-            if topic == 'art':
-                art_questions()
-            elif topic == 'space':
-                space_questions()
-            elif topic == 'sport':
-                sport_questions()
+            if topic in questions:
+                quiz_questions(questions[topic])
+
             elif topic == 'quit' or 'q':
                 print('Your quiz session has ended......')
                 sys.exit()
@@ -34,68 +33,35 @@ def main():
     except KeyError as key_err:
         print(f'key error {key_err}')
 
-# introduct to quiz game
-
 
 def welcome_banner():
+    """ This function introduces the user to the quiz game """
     print('\t*' * 10)
     print('\t\tWelcome!')
     print('\tPut your knowledge to the test with this Ultimate Quiz Questions!')
     print('\t*' * 10)
     print()
 
-# *****TOPICS****
-
-
-def art_questions():
-    try:
-        print(f'Chosen topic: Art\n')
-        quiz_questions('art')  # call quiz question on art
-
-    except Exception as err:
-        # update later
-        print(f'Something went wrong in art_questions() {err}')
-
-
-def space_questions():
-    try:
-        print(f'Chosen topic: Space\n')
-        quiz_questions('space')  # call quiz question on space
-
-    except Exception as err:
-        # update later
-        print(f'Something went wrong in space_questions() {err}')
-
-
-def sport_questions():
-    try:
-        print(f'Chosen topic: Sport\n')
-        quiz_questions('sport')
-
-    except Exception as err:
-        # update later
-        print(f'Something went wrong in sport_questions() {err}')
-
 
 def quiz_questions(topic):
-    """this function loops through set of questions based on given topic"""
+    """this function loops through set of questions based on given topic and returns how much they scored"""
     try:
 
         # returns size of quiz question
-        current_list_size = len(questions[topic])
+        current_list_size = len(topic)
         score = 0
         # loops through the passed topic questions list
-        for i in copy.deepcopy(questions[topic]):
+        for i in copy.deepcopy(topic):
             print(i)
             user = input('Enter here:\t').lower()
-            # return correct if the given key question mataches the users answer
-            if questions[topic][i].lower() == user:
+            # return correct if the given key question matches the its corresponding value i.e users answer
+            if topic[i].lower() == user:
                 print('correct\n')
                 score += 1
                 # del questions[topic][i]
             else:
                 print(
-                    f'Sorry that was incorrect. The correct answer  I was looking for was {questions[topic][i]}\n')  # display the correct answer
+                    f'Sorry that was incorrect. The correct answer I was looking for was {topic[i]}\n')  # if not correct display the correct answer
                 # del questions[topic][i]
 
         if score == current_list_size:  # check to see if they answered all the questions correctly
@@ -107,4 +73,4 @@ def quiz_questions(topic):
         print('Something went wrong in quiz_questions(), check logic')
 
 
-main()
+# main()
