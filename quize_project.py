@@ -17,16 +17,15 @@ def main():
             print('Enter "q" or "quit" to quit the game! ')
             print(
                 'Choose from one of the following topics to be quizzed on.')
-            for t in questions.keys():
+            for t in questions.keys():  # display all the current topics
                 print(f'-*- {t.capitalize()}')
 
-            topic = input('Enter Here: ').lower()
-            if topic in questions:
-                quiz_questions(questions[topic])
-
-            elif topic == 'quit' or 'q':
+            topic = input('\nEnter Here: ').lower()
+            if topic == 'quit' or topic == 'q':
                 print('Your quiz session has ended......')
                 sys.exit()
+            elif topic in questions:
+                quiz_questions(questions[topic])
             else:
                 print('Not a valid topic, please try again.\n')
 
@@ -44,7 +43,7 @@ def welcome_banner():
 
 
 def quiz_questions(topic):
-    """this function loops through set of questions based on given topic and returns how much they scored"""
+    """this function loops through set of questions based on chosen topic and returns the users score"""
     try:
 
         # returns size of quiz question
@@ -58,7 +57,6 @@ def quiz_questions(topic):
             if topic[i].lower() == user:
                 print('correct\n')
                 score += 1
-                # del questions[topic][i]
             else:
                 print(
                     f'Sorry that was incorrect. The correct answer I was looking for was {topic[i]}\n')  # if not correct display the correct answer
@@ -73,4 +71,4 @@ def quiz_questions(topic):
         print('Something went wrong in quiz_questions(), check logic')
 
 
-# main()
+main()
